@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram-Like Add Feed</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <button class="add-feed-btn" onclick="togglePostForm()">+ Add Feed</button>
+    <button class="add-feed-btn" onclick="openSavedFeeds()">Saved Feeds</button>
+    
+    <div class="post-form hidden" id="postForm">
+      <h2>Add a New Post</h2>
+      <form id="newPostForm">
+        <textarea id="postMessage" placeholder="What's on your mind?"></textarea>
+        <input type="file" id="postImage" accept="image/*">
+        <button type="button" onclick="addPost()">Post</button>
+        <button type="button" class="cancel-btn" onclick="togglePostForm()">Cancel</button>
+      </form>
+    </div>
+    
+    <div class="feed" id="feed">
+      <!-- User posts will appear here -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

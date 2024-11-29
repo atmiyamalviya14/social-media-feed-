@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Feeds</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <h1>Saved Feeds</h1>
+    <button class="add-feed-btn" onclick="goBack()">Back to Main</button>
+    <div class="feed" id="savedFeed">
+      <!-- Saved posts will appear here -->
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = "index.html";
+    }
+
+    // Load saved feeds
+    const savedFeeds = JSON.parse(localStorage.getItem('savedFeeds')) || [];
+    const savedFeedContainer = document.getElementById('savedFeed');
+
+    savedFeeds.forEach(feed => {
+      const post = document.createElement('div');
+      post.className = 'post';
+
+      if (feed.message) {
+        const messageElem = document.createElement('p');
+        messageElem.textContent = feed.message;
+        post.appendChild(messageElem);
+      }
+
+      if (feed.image) {
+        const img = document.createElement('img');
+        img.src = feed.image;
+        post.appendChild(img);
+      }
+
+      savedFeedContainer.appendChild(post);
+    });
+  </script>
+</body>
+</html>

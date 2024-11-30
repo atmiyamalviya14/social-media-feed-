@@ -16,32 +16,58 @@
   </div>
 
   <script>
-    function goBack() {
+     function goBack() {
       window.location.href = "index.html";
     }
 
     // Load saved feeds
-    const savedFeeds = JSON.parse(localStorage.getItem('savedFeeds')) || [];
+    let savedFeeds = JSON.parse(localStorage.getItem('savedFeeds')) || [];
     const savedFeedContainer = document.getElementById('savedFeed');
 
-    savedFeeds.forEach(feed => {
-      const post = document.createElement('div');
-      post.className = 'post';
+    function displaySavedFeeds() {
+      savedFeedContainer.innerHTML = ''; // Clear container before rendering
+      savedFeeds.forEach((feed, index) => {
+        const post = document.createElement('div');
+        post.className = 'post';
 
-      if (feed.message) {
-        const messageElem = document.createElement('p');
-        messageElem.textContent = feed.message;
-        post.appendChild(messageElem);
-      }
+        // Add message if present
+        if (feed.message) {
+          const messageElem = document.createElement('p');
+          messageElem.textContent = feed.message;
+          post.appendChild(messageElem);
+        }
 
-      if (feed.image) {
-        const img = document.createElement('img');
-        img.src = feed.image;
-        post.appendChild(img);
-      }
+        // Add image if present
+        if (feed.image) {
+          const img = document.createElement('img');
+          img.src = feed.image;
+          post.appendChild(img);
+        }
 
-      savedFeedContainer.appendChild(post);
-    });
+        // Add Unsave button
+        const unsaveButton = document.createElement('button');
+        unsaveButton.textContent = 'Unsave';
+        unsaveButton.className = 'unsave-btn';
+        unsaveButton.onclick = () => unsaveFeed(index);
+        post.appendChild(unsaveButton);
+
+        savedFeedContainer.appendChild(post);
+      });
+    }
+
+    function unsaveFeed(index) {
+      // Remove the selected feed from the array
+      savedFeeds.splice(index, 1);
+
+      // Update localStorage
+      localStorage.setItem('savedFeeds', JSON.stringify(savedFeeds));
+
+      // Re-render the saved feeds
+      displaySavedFeeds();
+    }
+
+    // Initial rendering of saved feeds
+    displaySavedFeeds();
   </script>
 </body>
 </html>
